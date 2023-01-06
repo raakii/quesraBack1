@@ -9,4 +9,5 @@ public interface QuestionService {
     Question postQuestion(QuestionDto question);
 
     List<Question> findAll();
+
 }
