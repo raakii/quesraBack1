@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name= "answer")
@@ -24,6 +26,7 @@ public class Answer {
     @JoinColumn(name = "user_id")
     @JsonIgnore
     private User user;
+
 
     public Answer(String text) {
         this.text = text;

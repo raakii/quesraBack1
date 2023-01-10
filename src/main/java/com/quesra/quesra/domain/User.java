@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table (name = "user_table")
+@Table (name = "users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -36,6 +36,12 @@ public class User {
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JsonIgnore
     private List<Answer> answers = new ArrayList<>();
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JsonIgnore
+    private List<Space> spaces = new ArrayList<>();
+
+
     public User(String username, String email, String name, String school, String password) {
         this.username = username;
         this.email = email;
@@ -102,5 +108,13 @@ public class User {
 
     public void setAnswers(List<Answer> answers) {
         this.answers = answers;
+    }
+
+    public List<Space> getSpaces() {
+        return spaces;
+    }
+
+    public void setSpaces(List<Space> spaces) {
+        this.spaces = spaces;
     }
 }

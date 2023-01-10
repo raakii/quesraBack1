@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/answers")
 public class AnswerController {
 
     private final AnswerService answerService;
@@ -21,7 +21,7 @@ public class AnswerController {
         this.answerService = answerService;
     }
 
-   @PostMapping("/create-response")
+   @PostMapping("/create-answer")
     public ResponseEntity<Answer> answerQuestion(@RequestBody AnswerDto answerDto) throws Exception {
         Answer answerResponse = answerService.answerQuestion(answerDto);
         if(answerResponse == null ) {
