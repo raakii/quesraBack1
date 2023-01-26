@@ -1,7 +1,11 @@
 package com.quesra.quesra.controller;
 
+import com.quesra.quesra.domain.Question;
+import com.quesra.quesra.domain.Space;
 import com.quesra.quesra.domain.User;
 import com.quesra.quesra.dto.ConnectDto;
+import com.quesra.quesra.dto.LikeDto;
+import com.quesra.quesra.dto.SpaceDto;
 import com.quesra.quesra.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -50,12 +54,24 @@ public class UserController {
         return userService.getAllUsers();
     }
 
-    /* @PutMapping("join-space")
-    public ResponseEntity<User> joinSpace(@RequestParam Long spaceId, @RequestParam Long userId) throws Exception {
-        if (spaceId == null) {
-            throw new Exception("Space Id must be not null");
-        }
-        return ResponseEntity.status(HttpStatus.OK).body(userService.joinUser(spaceId,userId));
-    }*/
+    @PatchMapping("/join-space")
+    public ResponseEntity<User> joinSpace(@RequestBody SpaceDto spaceDto) throws Exception {
+        return ResponseEntity.status(HttpStatus.OK).body(userService.joinSpace(spaceDto));
+    }
+
+    @PatchMapping("/unjoin-space")
+    public ResponseEntity<User> unjoinSpace(@RequestBody SpaceDto spaceDto) throws Exception {
+        return ResponseEntity.status(HttpStatus.OK).body(userService.unjoinSpace(spaceDto));
+    }
+
+    @GetMapping("/get-joinedSpaces")
+    public ResponseEntity<List<Space>> getJoindedSpaces(@PathVariable Long id) {
+        return (ResponseEntity<List<Space>>) getUserById(id).get().getJoindedSpaces();
+    }
+
+    @PatchMapping("/like-a-post")
+    public Question likeApost(@RequestBody LikeDto likeDto) {
+        return userService.likeApost(likeDto);
+    }
 }
 

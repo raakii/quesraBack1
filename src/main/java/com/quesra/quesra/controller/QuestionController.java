@@ -1,6 +1,7 @@
 package com.quesra.quesra.controller;
 
 import com.quesra.quesra.domain.Question;
+import com.quesra.quesra.dto.LikeDto;
 import com.quesra.quesra.dto.QuestionDto;
 import com.quesra.quesra.service.QuestionService;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
@@ -34,5 +35,14 @@ public class QuestionController {
         return ResponseEntity.status(HttpStatus.OK).body(questionService.findAll());
     }
 
+    @GetMapping("get-number-of-likes/{postId}")
+    public Integer getNumberOfLikes (@PathVariable Long postId) {
+        return questionService.getNumberOfLikes(postId);
+    }
+
+    @GetMapping("is-liked-by-currentUser")
+    public boolean isLiked (@RequestBody LikeDto likeDto) {
+        return questionService.isLiked(likeDto);
+    }
 
 }

@@ -37,9 +37,9 @@ public class User {
     @JsonIgnore
     private List<Answer> answers = new ArrayList<>();
 
+
     @ManyToMany(fetch = FetchType.LAZY)
-    @JsonIgnore
-    private List<Space> spaces = new ArrayList<>();
+    private List<Space> joindedSpaces = new ArrayList<>();
 
 
     public User(String username, String email, String name, String school, String password) {
@@ -110,11 +110,19 @@ public class User {
         this.answers = answers;
     }
 
-    public List<Space> getSpaces() {
-        return spaces;
+    public Long getId() {
+        return Id;
     }
 
-    public void setSpaces(List<Space> spaces) {
-        this.spaces = spaces;
+    public void setId(Long id) {
+        Id = id;
+    }
+
+    public List<Space> getJoindedSpaces() {
+        return joindedSpaces;
+    }
+
+    public void setJoindedSpaces(List<Space> joindedSpaces) {
+        this.joindedSpaces = joindedSpaces;
     }
 }

@@ -1,6 +1,7 @@
 package com.quesra.quesra.service;
 
 import com.quesra.quesra.domain.Question;
+import com.quesra.quesra.dto.LikeDto;
 import com.quesra.quesra.dto.QuestionDto;
 
 import java.util.List;
@@ -10,4 +11,7 @@ public interface QuestionService {
 
     List<Question> findAll();
 
+    Integer getNumberOfLikes(Long postId);
+
+    boolean isLiked(LikeDto likeDto);
 }

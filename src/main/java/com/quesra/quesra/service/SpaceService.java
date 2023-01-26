@@ -1,6 +1,7 @@
 package com.quesra.quesra.service;
 
 import com.quesra.quesra.domain.Space;
+import com.quesra.quesra.domain.User;
 import com.quesra.quesra.dto.SpaceDto;
 
 
@@ -10,5 +11,8 @@ public interface SpaceService {
     Space createSpace(SpaceDto spaceDto);
 
     List<Space> getAllSpaces();
+
+
+
 
 }

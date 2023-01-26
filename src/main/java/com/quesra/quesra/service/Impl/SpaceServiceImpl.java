@@ -1,6 +1,7 @@
 package com.quesra.quesra.service.Impl;
 
 import com.quesra.quesra.domain.Space;
+import com.quesra.quesra.domain.User;
 import com.quesra.quesra.dto.SpaceDto;
 import com.quesra.quesra.repository.SpaceRepository;
 import com.quesra.quesra.service.SpaceService;
@@ -34,6 +35,9 @@ public class SpaceServiceImpl implements SpaceService {
     public List<Space> getAllSpaces() {
         return spaceRepository.findAll();
     }
+
+
+
 
 
 }

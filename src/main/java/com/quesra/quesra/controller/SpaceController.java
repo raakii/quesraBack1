@@ -1,6 +1,7 @@
 package com.quesra.quesra.controller;
 
 import com.quesra.quesra.domain.Space;
+import com.quesra.quesra.domain.User;
 import com.quesra.quesra.dto.SpaceDto;
 import com.quesra.quesra.service.SpaceService;
 import org.springframework.http.HttpStatus;
@@ -31,5 +32,7 @@ public class SpaceController {
     public ResponseEntity<List<Space>> getAllSpaces(){
         return ResponseEntity.status(HttpStatus.OK).body(spaceService.getAllSpaces());
     }
+
+
 
 }

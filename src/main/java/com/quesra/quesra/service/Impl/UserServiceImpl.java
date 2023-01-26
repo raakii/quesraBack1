@@ -1,10 +1,14 @@
 package com.quesra.quesra.service.Impl;
 
+import com.quesra.quesra.domain.Question;
 import com.quesra.quesra.domain.Space;
 import com.quesra.quesra.domain.User;
 import com.quesra.quesra.dto.ConnectDto;
+import com.quesra.quesra.dto.LikeDto;
+import com.quesra.quesra.dto.SpaceDto;
+import com.quesra.quesra.repository.QuestionRepository;
+import com.quesra.quesra.repository.SpaceRepository;
 import com.quesra.quesra.repository.UserRepository;
-import com.quesra.quesra.service.SpaceService;
 import com.quesra.quesra.service.UserService;
 import org.springframework.stereotype.Service;
 import org.mindrot.jbcrypt.BCrypt;
@@ -16,10 +20,14 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
 
+    private final SpaceRepository spaceRepository;
+    private final QuestionRepository questionRepository;
 
-
-    public UserServiceImpl(UserRepository userRepository) {
+    public UserServiceImpl(UserRepository userRepository, SpaceRepository spaceRepository,
+                           QuestionRepository questionRepository) {
         this.userRepository = userRepository;
+        this.spaceRepository = spaceRepository;
+        this.questionRepository = questionRepository;
     }
 
     @Override
@@ -77,6 +85,32 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findByEmail(String email) {
         return userRepository.findByEmail(email);
+    }
+
+    @Override
+    public User joinSpace(SpaceDto spaceDto) {
+        User currentUser = userRepository.findByEmail(spaceDto.getEmail());
+        List<Space> joinedSpaces = currentUser.getJoindedSpaces();
+        joinedSpaces.add(spaceRepository.findSpaceByName(spaceDto.getName()));
+        currentUser.setJoindedSpaces(joinedSpaces);
+        return userRepository.save(currentUser);
+    }
+
+    @Override
+    public User unjoinSpace(SpaceDto spaceDto) {
+        Long userId = userRepository.findByEmail(spaceDto.getEmail()).getId();
+        Long spaceId = spaceRepository.findSpaceByName(spaceDto.getName()).getId();
+        return spaceRepository.deleteSpaceForUser(userId,spaceId) ;
+    }
+
+    @Override
+    public Question likeApost(LikeDto likeDto) {
+        Question question = questionRepository.findById(likeDto.getPostId()).get();
+        List<User> postLikes = question.getLikes();
+        postLikes.add(userRepository.findById(likeDto.getUserId()).get());
+        question.setLikes(postLikes);
+
+        return questionRepository.save(question);
     }
 
 

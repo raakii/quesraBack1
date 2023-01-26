@@ -1,6 +1,8 @@
 package com.quesra.quesra.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,12 +24,17 @@ public class Question {
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnore
+    @JsonIgnoreProperties
     @JoinColumn(name = "space_id")
     private Space space;
 
     @OneToMany(mappedBy = "question" , fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<Answer> answers = new ArrayList<>();
+
+    @OneToMany( fetch = FetchType.LAZY)
+    @JsonIgnore
+    private List<User> likes = new ArrayList<>();
 
     public Question(String text) {
         this.text = text;
@@ -63,5 +70,21 @@ public class Question {
 
     public void setAnswers(List<Answer> answers) {
         this.answers = answers;
+    }
+
+    public Space getSpace() {
+        return space;
+    }
+
+    public void setSpace(Space space) {
+        this.space = space;
+    }
+
+    public List<User> getLikes() {
+        return likes;
+    }
+
+    public void setLikes(List<User> likes) {
+        this.likes = likes;
     }
 }

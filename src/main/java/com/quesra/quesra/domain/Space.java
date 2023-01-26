@@ -14,6 +14,9 @@ public class Space {
     @Column
     private String name;
 
+    @Column
+    private String description;
+
     @OneToOne ( fetch = FetchType.EAGER)
     @JsonIgnore
     private User admin;
@@ -51,6 +54,13 @@ public class Space {
         this.admin = admin;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
     @Override
     public String toString() {
