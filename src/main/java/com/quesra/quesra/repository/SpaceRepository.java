@@ -10,7 +10,4 @@ import java.util.List;
 
 public interface SpaceRepository extends JpaRepository<Space,Long> {
     Space findSpaceByName(String name);
-
-    @Query (nativeQuery = true, value = "DELETE FROM users_joinded_spaces where user_id = ?1 and joinded_spaces_id=?2")
-    User deleteSpaceForUser(Long userId, Long spaceId);
 }

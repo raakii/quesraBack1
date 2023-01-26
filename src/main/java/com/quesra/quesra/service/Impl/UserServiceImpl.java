@@ -9,6 +9,7 @@ import com.quesra.quesra.dto.SpaceDto;
 import com.quesra.quesra.repository.QuestionRepository;
 import com.quesra.quesra.repository.SpaceRepository;
 import com.quesra.quesra.repository.UserRepository;
+import com.quesra.quesra.service.QuestionService;
 import com.quesra.quesra.service.UserService;
 import org.springframework.stereotype.Service;
 import org.mindrot.jbcrypt.BCrypt;
@@ -23,11 +24,14 @@ public class UserServiceImpl implements UserService {
     private final SpaceRepository spaceRepository;
     private final QuestionRepository questionRepository;
 
+    private final QuestionService questionService;
+
     public UserServiceImpl(UserRepository userRepository, SpaceRepository spaceRepository,
-                           QuestionRepository questionRepository) {
+                           QuestionRepository questionRepository, QuestionService questionService) {
         this.userRepository = userRepository;
         this.spaceRepository = spaceRepository;
         this.questionRepository = questionRepository;
+        this.questionService = questionService;
     }
 
     @Override
@@ -100,15 +104,22 @@ public class UserServiceImpl implements UserService {
     public User unjoinSpace(SpaceDto spaceDto) {
         Long userId = userRepository.findByEmail(spaceDto.getEmail()).getId();
         Long spaceId = spaceRepository.findSpaceByName(spaceDto.getName()).getId();
-        return spaceRepository.deleteSpaceForUser(userId,spaceId) ;
+        return null;
     }
 
     @Override
     public Question likeApost(LikeDto likeDto) {
         Question question = questionRepository.findById(likeDto.getPostId()).get();
         List<User> postLikes = question.getLikes();
-        postLikes.add(userRepository.findById(likeDto.getUserId()).get());
-        question.setLikes(postLikes);
+
+        if(questionService.isLiked(likeDto.getPostId(), likeDto.getUserId())) {
+            postLikes.remove(userRepository.findById(likeDto.getUserId()).get());
+            question.setLikes(postLikes);
+        }
+        else {
+            postLikes.add(userRepository.findById(likeDto.getUserId()).get());
+            question.setLikes(postLikes);
+        }
 
         return questionRepository.save(question);
     }

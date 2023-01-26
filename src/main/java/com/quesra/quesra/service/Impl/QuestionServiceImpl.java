@@ -5,9 +5,11 @@ import com.quesra.quesra.domain.User;
 import com.quesra.quesra.dto.LikeDto;
 import com.quesra.quesra.dto.QuestionDto;
 import com.quesra.quesra.repository.QuestionRepository;
+import com.quesra.quesra.repository.UserRepository;
 import com.quesra.quesra.service.QuestionService;
 import com.quesra.quesra.service.UserService;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -16,19 +18,19 @@ import java.util.stream.Collectors;
 public class QuestionServiceImpl implements QuestionService {
 
     private final QuestionRepository questionRepository;
+    private final UserRepository userRepository;
 
-    private final UserService userService;
-
-    public QuestionServiceImpl(QuestionRepository questionRepository, UserService userService) {
+    public QuestionServiceImpl(QuestionRepository questionRepository,
+                               UserRepository userRepository) {
         this.questionRepository = questionRepository;
-        this.userService = userService;
+        this.userRepository = userRepository;
     }
 
     @Override
     public Question postQuestion(QuestionDto questionDto) {
         Question question = new Question();
         question.setText(questionDto.getText());
-        question.setUser(userService.findByEmail(questionDto.getEmail()));
+        question.setUser(userRepository.findByEmail(questionDto.getEmail()));
 
         return questionRepository.save(question);
     }
@@ -45,14 +47,14 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public boolean isLiked(LikeDto likeDto) {
-        User user1 = questionRepository.findById(likeDto.getPostId()).get().getLikes()
-                .stream().filter(user -> user.getId().equals(likeDto.getUserId()))
-                .collect(Collectors.toList()).get(0);
-        if (user1 == null )
-            return false;
-        else
+    public boolean isLiked(@RequestParam Long postId, @RequestParam Long userId) {
+        Integer size = questionRepository.findById(postId).get().getLikes()
+                .stream().filter(user -> user.getId().equals(userId))
+                .collect(Collectors.toList()).size();
+        if (size == 1 )
             return true;
+        else
+            return false;
     }
 
 }

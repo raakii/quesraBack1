@@ -41,8 +41,8 @@ public class QuestionController {
     }
 
     @GetMapping("is-liked-by-currentUser")
-    public boolean isLiked (@RequestBody LikeDto likeDto) {
-        return questionService.isLiked(likeDto);
+    public boolean isLiked (@RequestParam Long postId, @RequestParam Long userId) {
+        return questionService.isLiked(postId,userId);
     }
 
 }
