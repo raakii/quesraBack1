@@ -1,0 +1,49 @@
+#!/usr/bin/env groovy
+
+node {
+    stage('checkout') {
+        checkout scm
+    }
+
+    stage('check java') {
+        sh "java -version"
+    }
+
+    def dockertag = 'latest'
+    stage("Docker Tag"){
+        gittags = sh(returnStdout: true, script: 'git tag -l --contains HEAD').trim()
+        if (gittags?.trim()){
+            echo " there are one tag : ${gittags}"
+            dockerTag = gittags
+        }
+    }
+
+    stage('clean') {
+        sh "chmod +x ./mvnw"
+        sh "./mvnw clean"
+    }
+
+    stage('packaging') {
+        sh "./mvnw verify -Pprod -DskipTests"
+        archiveArtifacts artifacts: '**/target/*.war', fingerprint: true
+    }
+
+    stage('build docker') {
+        sh "cp -R src/main/docker target/"
+        sh "cp target/*.war target/docker/"
+        //build docker image
+        sh "pwd"
+        sh "ls"
+        //sh "docker image build -t custom-jenkins-docker ./target/docker/"
+        dockerImage = docker.build("rakid18/quesra:${dockertag}", 'target/docker')
+    }
+
+
+    stage('Publish docker') {
+        docker.withRegistry('https://registry.hub.docker.com', '3df2ab74-0b27-466e-917a-24d9f4da5b37') {
+            dockerImage.push dockertag
+            sh "docker rmi rakid18/quesra:${dockertag}"
+        }
+    }
+
+}
