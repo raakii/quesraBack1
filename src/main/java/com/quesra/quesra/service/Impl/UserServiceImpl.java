@@ -102,9 +102,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User unjoinSpace(SpaceDto spaceDto) {
-        Long userId = userRepository.findByEmail(spaceDto.getEmail()).getId();
-        Long spaceId = spaceRepository.findSpaceByName(spaceDto.getName()).getId();
-        return null;
+        User currentUser = userRepository.findByEmail(spaceDto.getEmail());
+        List<Space> joinedSpaces = currentUser.getJoindedSpaces();
+        joinedSpaces.remove(spaceRepository.findSpaceByName(spaceDto.getName()));
+        currentUser.setJoindedSpaces(joinedSpaces);
+        return userRepository.save(currentUser);
     }
 
     @Override
