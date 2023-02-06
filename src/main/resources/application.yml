@@ -5,7 +5,7 @@ spring:
     hibernate:
       ddl-auto: update
   datasource:
-    url: jdbc:postgresql://${{ username }}:${{ password }}@${{ PGHOST }}:${{ PGPORT }}/${{ PGDATABASE }}
+    url: postgresql://${{ username }}:${{ password }}@${{ PGHOST }}:${{ PGPORT }}/${{ PGDATABASE }}
     username: postgres
     password: SLhyaTs4Yp5fH4xLxisH
     PGHOST: containers-us-west-46.railway.app
