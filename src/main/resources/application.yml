@@ -12,6 +12,8 @@
       password: SLhyaTs4Yp5fH4xLxisH
       driverClassName: org.postgresql.Driver
 
+  server:
+    port: 7972
 
   springdoc:
     api-docs:
