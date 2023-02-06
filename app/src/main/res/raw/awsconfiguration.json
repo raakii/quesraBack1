@@ -1,0 +1,22 @@
+{
+    "UserAgent": "aws-amplify-cli/0.1.0",
+    "Version": "0.1.0",
+    "IdentityManager": {
+        "Default": {}
+    },
+    "AppSync": {
+        "Default": {
+            "ApiUrl": "https://hlf7xr5xezhutewogjp7cavj6q.appsync-api.us-east-1.amazonaws.com/graphql",
+            "Region": "us-east-1",
+            "AuthMode": "API_KEY",
+            "ApiKey": "da2-tghll65r2bawrgrhsaxxg4vk2a",
+            "ClientDatabasePrefix": "quesraSample_API_KEY"
+        },
+        "quesraSample_AWS_IAM": {
+            "ApiUrl": "https://hlf7xr5xezhutewogjp7cavj6q.appsync-api.us-east-1.amazonaws.com/graphql",
+            "Region": "us-east-1",
+            "AuthMode": "AWS_IAM",
+            "ClientDatabasePrefix": "quesraSample_AWS_IAM"
+        }
+    }
+}
