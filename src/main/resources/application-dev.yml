@@ -5,15 +5,10 @@ spring:
     hibernate:
       ddl-auto: update
   datasource:
-    url: jdbc:postgresql://${{ username }}:${{ password }}@${{ PGHOST }}:${{ PGPORT }}/${{ PGDATABASE }}
+    url: jdbc:postgresql://localhost:5432/quesra
     username: postgres
-    password: SLhyaTs4Yp5fH4xLxisH
-    PGHOST: containers-us-west-116.railway.app
-    PGPORT: 7972
-    PGDATABASE: railway
+    password: postgres
     driverClassName: org.postgresql.Driver
-  profiles:
-    active: prod
 
 server:
     port: 8080
