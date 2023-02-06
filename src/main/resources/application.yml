@@ -7,9 +7,9 @@ spring:
   datasource:
     url: jdbc:postgresql://${{ username }}:${{ password }}@${{ PGHOST }}:${{ PGPORT }}/${{ PGDATABASE }}
     username: postgres
-    password: SLhyaTs4Yp5fH4xLxisH
-    PGHOST: containers-us-west-116.railway.app
-    PGPORT: 7972
+    password: YRnpZtuUs49FLE0ccEj6
+    PGHOST: containers-us-west-46.railway.app
+    PGPORT: 7699
     PGDATABASE: railway
     driverClassName: org.postgresql.Driver
   profiles:
