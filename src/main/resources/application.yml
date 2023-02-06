@@ -1,26 +1,23 @@
-spring:
-  jpa:
-    database: POSTGRESQL
-    show-sql: true
-    hibernate:
-      ddl-auto: update
-  datasource:
-    url: postgresql://${{ username }}:${{ password }}@${{ PGHOST }}:${{ PGPORT }}/${{ PGDATABASE }}
-    username: postgres
-    password: SLhyaTs4Yp5fH4xLxisH
-    PGHOST: containers-us-west-46.railway.app
-    PGPORT: 7972
-    PGDATABASE: railway
-    driverClassName: org.postgresql.Driver
-  profiles:
-    active: prod
+  21 lines (19 sloc)  409 Bytes
 
-server:
+  spring:
+    jpa:
+      database: POSTGRESQL
+      show-sql: true
+      hibernate:
+        ddl-auto: update
+    datasource:
+      url: jdbc:postgresql://containers-us-west-116.railway.app:7972/railway
+      username: postgres
+      password: SLhyaTs4Yp5fH4xLxisH
+      driverClassName: org.postgresql.Driver
+
+  server:
     port: 8080
 
-springdoc:
-  api-docs:
-    enabled: true
-    path: /api-docs
-  swagger-ui:
-    path: /swagger-ui
+  springdoc:
+    api-docs:
+      enabled: true
+      path: /api-docs
+    swagger-ui:
+      path: /swagger-ui
